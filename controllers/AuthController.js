@@ -42,6 +42,9 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { username: user.username, _id: user._id },
       JWT_SECRET,
+      {
+        expiresIn: "48h", // Set the expiration to 48 hours
+      },
     );
 
     res.json({ token });
@@ -51,18 +54,10 @@ const login = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
 const getUserDetails = async (req, res) => {
   try {
     // Get the token from the request header
-    const token = req.header("Authorization")
+    const token = req.header("Authorization");
 
     // Verify the token
     const JWT_SECRET = "your-secret-key";
@@ -90,6 +85,4 @@ const getUserDetails = async (req, res) => {
   }
 };
 
-
-
-module.exports = { login, signup ,getUserDetails};
+module.exports = { login, signup, getUserDetails };
