@@ -4,14 +4,14 @@ const bcrypt = require("bcrypt");
 
 const createTask = async (req, res) => {
   try {
-    const { title, description, priority, status } = req.body;
+    const { title, description, priority } = req.body;
 
     const user = await User.findOne({ username: req.user.username });
     const newTask = new Task({
       title,
       description,
-      priority,
-      status,
+      priority:priority || "Low",
+      status:"Todo",
       user: user._id,
     });
     await newTask.save();

@@ -51,4 +51,45 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { login, signup };
+
+
+
+
+
+
+
+
+const getUserDetails = async (req, res) => {
+  try {
+    // Get the token from the request header
+    const token = req.header("Authorization")
+
+    // Verify the token
+    const JWT_SECRET = "your-secret-key";
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    // Fetch user details based on the decoded information
+    const user = await User.findOne({ _id: decoded._id });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Return user details
+    res.json({
+      username: user.username,
+      email: user.email,
+      // Add any other user details you want to include
+    });
+  } catch (error) {
+    console.log(error);
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
+module.exports = { login, signup ,getUserDetails};
