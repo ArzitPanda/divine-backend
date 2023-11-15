@@ -10,8 +10,8 @@ const createTask = async (req, res) => {
     const newTask = new Task({
       title,
       description,
-      priority:priority || "Low",
-      status:"Todo",
+      priority: priority || "Low",
+      status: "Todo",
       user: user._id,
     });
     await newTask.save();
@@ -47,14 +47,14 @@ const updateTask = async (req, res) => {
   try {
     const { title, description, priority, status } = req.body;
     const taskId = req.params.taskId;
-    console.log(req.user);
-    console.log(taskId);
+    // console.log(req.user);
+    // console.log(taskId);
     const task = await Task.findOneAndUpdate(
       { _id: taskId, user: req.user._id },
       { description, priority, status },
       { new: true },
     );
-    console.log(task);
+    // console.log(task);
     if (!task) {
       return res.status(404).json({ error: "Task not found or unauthorized" });
     }

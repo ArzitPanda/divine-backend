@@ -34,7 +34,7 @@ app.use("/auth", auth);
 app.use("/task", task);
 
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("health check");
 });
 
 app.listen(port, () => {
